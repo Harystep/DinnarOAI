@@ -66,7 +66,6 @@
 		389DA4142A395A7C007BC96A /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 389DA4132A395A7C007BC96A /* CoreVideo.framework */; };
 		389DA4162A395A97007BC96A /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 389DA4152A395A97007BC96A /* CoreMedia.framework */; };
 		389DA4182A395AA2007BC96A /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 389DA4172A395AA2007BC96A /* AssetsLibrary.framework */; };
-		389DA41A2A395ABA007BC96A /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 389DA4192A395ABA007BC96A /* opencv2.framework */; };
 		389DA4262A395C5E007BC96A /* SataProcessing.mm in Sources */ = {isa = PBXBuildFile; fileRef = 389DA4252A395C5E007BC96A /* SataProcessing.mm */; };
 		389DA44A2A39C94D007BC96A /* 640.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 389DA4492A39C94D007BC96A /* 640.jpg */; };
 		38B513C12A47EAF8001F88D6 /* DateTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B513C02A47EAF8001F88D6 /* DateTool.swift */; };
@@ -218,7 +217,6 @@
 		389DA4132A395A7C007BC96A /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		389DA4152A395A97007BC96A /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		389DA4172A395AA2007BC96A /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
-		389DA4192A395ABA007BC96A /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = opencv2.framework; sourceTree = "<group>"; };
 		389DA41F2A395B1D007BC96A /* processing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = processing.h; sourceTree = "<group>"; };
 		389DA4242A395C5E007BC96A /* SataProcessing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SataProcessing.h; sourceTree = "<group>"; };
 		389DA4252A395C5E007BC96A /* SataProcessing.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = SataProcessing.mm; sourceTree = "<group>"; };
@@ -309,7 +307,6 @@
 				389DA4042A395909007BC96A /* AVFoundation.framework in Frameworks */,
 				389DA3FF2A3958FB007BC96A /* libc++.tbd in Frameworks */,
 				9CF2CD5D8F9EA4F0200AB4A1 /* libPods-Dinnar.a in Frameworks */,
-				389DA41A2A395ABA007BC96A /* opencv2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -461,7 +458,6 @@
 				4C3AB8CE2AECF8220059E988 /* best.mlmodel */,
 				4C6568E72AE8A23B00E34137 /* swift_v3.mlmodel */,
 				38D0C63B2A3AA350007D7A16 /* 666.jpeg */,
-				389DA4192A395ABA007BC96A /* opencv2.framework */,
 				3861BA752A1A35C500E9BB08 /* classes.csv */,
 				389DA4492A39C94D007BC96A /* 640.jpg */,
 				3861BA702A1A35BE00E9BB08 /* segmentation.mlmodel */,
