@@ -1,0 +1,75 @@
+PODS:
+  - Alamofire (4.9.1)
+  - CocoaAsyncSocket (7.6.5)
+  - HandyJSON (5.0.2)
+  - IQKeyboardManagerSwift (6.5.12)
+  - Kingfisher (7.7.0)
+  - MBProgressHUD (1.1.0)
+  - MJRefresh (3.7.5)
+  - Moya (13.0.1):
+    - Moya/Core (= 13.0.1)
+  - Moya/Core (13.0.1):
+    - Alamofire (~> 4.1)
+    - Result (~> 4.1)
+  - Result (4.1.0)
+  - SDWebImage (5.12.1):
+    - SDWebImage/Core (= 5.12.1)
+  - SDWebImage/Core (5.12.1)
+  - YBImageBrowser (3.0.9):
+    - YBImageBrowser/Core (= 3.0.9)
+  - YBImageBrowser/Core (3.0.9):
+    - SDWebImage (>= 5.0.0)
+    - YYImage
+  - YYImage (1.0.4):
+    - YYImage/Core (= 1.0.4)
+  - YYImage/Core (1.0.4)
+  - ZXingObjC (3.6.5):
+    - ZXingObjC/All (= 3.6.5)
+  - ZXingObjC/All (3.6.5)
+
+DEPENDENCIES:
+  - CocoaAsyncSocket
+  - HandyJSON (~> 5.0.2)
+  - IQKeyboardManagerSwift (~> 6.5.1)
+  - Kingfisher
+  - MBProgressHUD (= 1.1.0)
+  - MJRefresh
+  - Moya (= 13.0.1)
+  - YBImageBrowser
+  - ZXingObjC (~> 3.6.4)
+
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - CocoaAsyncSocket
+    - SDWebImage
+    - YBImageBrowser
+    - YYImage
+  trunk:
+    - Alamofire
+    - HandyJSON
+    - IQKeyboardManagerSwift
+    - Kingfisher
+    - MBProgressHUD
+    - MJRefresh
+    - Moya
+    - Result
+    - ZXingObjC
+
+SPEC CHECKSUMS:
+  Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
+  CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
+  HandyJSON: 9e4e236f5d2dbefad5155a77417bbea438201c03
+  IQKeyboardManagerSwift: 371b08cb39664fb56030f5345c815a4ffc74bbc0
+  Kingfisher: f043ac666dfc96c1f37604f93effb45a7ee3a3e1
+  MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
+  MJRefresh: fdf5e979eb406a0341468932d1dfc8b7f9fce961
+  Moya: f4a4b80ff2f8a4ffc208dfb31cd91636622fee6e
+  Result: bd966fac789cc6c1563440b348ab2598cc24d5c7
+  SDWebImage: 4dc3e42d9ec0c1028b960a33ac6b637bb432207b
+  YBImageBrowser: 7ecc8bf33ffa5f3b94c397c29b4f3638dd37f527
+  YYImage: 1e1b62a9997399593e4b9c4ecfbbabbf1d3f3b54
+  ZXingObjC: fdbb269f25dd2032da343e06f10224d62f537bdb
+
+PODFILE CHECKSUM: 544cb22fae52b4623e2eab5fcb4fe83fd31d4c72
+
+COCOAPODS: 1.12.1

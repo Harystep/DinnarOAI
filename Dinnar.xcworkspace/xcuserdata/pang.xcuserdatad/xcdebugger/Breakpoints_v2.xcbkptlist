@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "02C73CFB-4375-411A-8236-A443356BF2E0"
+   type = "0"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "20B916C7-F2AA-405A-B546-9D7686EA4ADE"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Pods/Moya/Sources/Moya/Response.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "156"
+            endingLineNumber = "156"
+            landmarkName = "map(_:atKeyPath:using:failsOnEmptyData:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "20B916C7-F2AA-405A-B546-9D7686EA4ADE - 3e5cb77512696436"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Moya.Response.map&lt;A where A: Swift.Decodable&gt;(_: A.Type, atKeyPath: Swift.Optional&lt;Swift.String&gt;, using: Foundation.JSONDecoder, failsOnEmptyData: Swift.Bool) throws -&gt; A"
+                  moduleName = "Dinnar"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/pang/Desktop/Din/Dinnar/Pods/Moya/Sources/Moya/Response.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "156"
+                  endingLineNumber = "156"
+                  offsetFromSymbolStart = "700">
+               </Location>
+               <Location
+                  uuid = "20B916C7-F2AA-405A-B546-9D7686EA4ADE - 3e5cb77512696436"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Moya.Response.map&lt;A where A: Swift.Decodable&gt;(_: A.Type, atKeyPath: Swift.Optional&lt;Swift.String&gt;, using: Foundation.JSONDecoder, failsOnEmptyData: Swift.Bool) throws -&gt; A"
+                  moduleName = "Dinnar"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/pang/Desktop/Din/Dinnar/Pods/Moya/Sources/Moya/Response.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "156"
+                  endingLineNumber = "156"
+                  offsetFromSymbolStart = "724">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "FD23D5B3-2F4C-42AC-9D43-877B7468CE66"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Dinnar/Login/Controller/LoginViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "43"
+            endingLineNumber = "43"
+            landmarkName = "loginBtClick()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C39D1350-F3EA-4C63-845B-1BFF8B170284"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Dinnar/Tool/SerialGATT.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "342"
+            endingLineNumber = "342"
+            landmarkName = "-peripheral:didUpdateValueForCharacteristic:error:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>

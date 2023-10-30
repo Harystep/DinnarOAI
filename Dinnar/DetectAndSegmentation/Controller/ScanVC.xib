@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ScanVC" customModule="Dinnar" customModuleProvider="target">
+            <connections>
+                <outlet property="backBtn" destination="bJn-8R-86r" id="g3k-nR-cEx"/>
+                <outlet property="scanView" destination="vov-vc-L1L" id="CZZ-4K-FRE"/>
+                <outlet property="titleLabel" destination="rP7-bQ-5E8" id="OxY-iH-D1S"/>
+                <outlet property="view" destination="kiA-nb-WDH" id="Vnz-4k-0uZ"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="kiA-nb-WDH">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vov-vc-L1L">
+                    <rect key="frame" x="60" y="301" width="294" height="294"/>
+                    <color key="backgroundColor" white="1" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="vov-vc-L1L" secondAttribute="height" multiplier="1:1" id="mio-yO-09D"/>
+                    </constraints>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="扫描设备二维码，获取设备ID" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rP7-bQ-5E8">
+                    <rect key="frame" x="10" y="250.5" width="394" height="20.5"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bJn-8R-86r">
+                    <rect key="frame" x="0.0" y="44" width="50" height="44"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="50" id="a3X-3X-zUR"/>
+                        <constraint firstAttribute="height" constant="44" id="bbk-E0-7Rz"/>
+                    </constraints>
+                    <state key="normal" image="BackIconWhite"/>
+                    <connections>
+                        <action selector="backBtnClick" destination="-1" eventType="touchUpInside" id="46o-qu-aX5"/>
+                    </connections>
+                </button>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="LFO-6W-Zyj"/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="bJn-8R-86r" firstAttribute="top" secondItem="LFO-6W-Zyj" secondAttribute="top" id="2Ml-MG-Gvi"/>
+                <constraint firstItem="vov-vc-L1L" firstAttribute="leading" secondItem="LFO-6W-Zyj" secondAttribute="leading" constant="60" id="LBs-fx-1F1"/>
+                <constraint firstItem="vov-vc-L1L" firstAttribute="centerX" secondItem="kiA-nb-WDH" secondAttribute="centerX" id="N9W-aP-ZYY"/>
+                <constraint firstItem="LFO-6W-Zyj" firstAttribute="trailing" secondItem="rP7-bQ-5E8" secondAttribute="trailing" constant="10" id="Zgf-w8-qI8"/>
+                <constraint firstItem="vov-vc-L1L" firstAttribute="centerY" secondItem="kiA-nb-WDH" secondAttribute="centerY" id="cag-Gk-Tb3"/>
+                <constraint firstItem="vov-vc-L1L" firstAttribute="top" secondItem="rP7-bQ-5E8" secondAttribute="bottom" constant="30" id="sJl-mw-gH6"/>
+                <constraint firstItem="rP7-bQ-5E8" firstAttribute="leading" secondItem="LFO-6W-Zyj" secondAttribute="leading" constant="10" id="t8S-eD-csK"/>
+                <constraint firstItem="LFO-6W-Zyj" firstAttribute="trailing" secondItem="vov-vc-L1L" secondAttribute="trailing" constant="60" id="tzm-AY-SsT"/>
+                <constraint firstItem="bJn-8R-86r" firstAttribute="leading" secondItem="LFO-6W-Zyj" secondAttribute="leading" id="vNo-fZ-dPn"/>
+            </constraints>
+            <point key="canvasLocation" x="-142" y="-558"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="BackIconWhite" width="10" height="17.5"/>
+    </resources>
+</document>

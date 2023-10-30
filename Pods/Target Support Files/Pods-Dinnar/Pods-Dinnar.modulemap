@@ -1,0 +1,6 @@
+module Pods_Dinnar {
+  umbrella header "Pods-Dinnar-umbrella.h"
+
+  export *
+  module * { export * }
+}
