@@ -47,6 +47,10 @@
 @property (nonatomic, assign) BOOL isWithOut;
 @property (nonatomic, assign) CBManagerState peripheralState; // 蓝牙状态
 @property (nonatomic,strong) NSTimer *timer;
+@property (nonatomic,copy) NSString *lightNum;//亮度设置
+@property (nonatomic,assign) int lightType;//灯光类型
+@property (nonatomic,copy) NSString *lighColor;//灯光颜色
+
 + (SerialGATT *)shareInstance;
 
 #pragma mark - Methods for controlling the BLKSoft Sensor
@@ -82,8 +86,8 @@
 -(void)turnOnTheLight;
 -(void)turnOffTheLight;
 
--(void)turnOnTheRGBLight;
--(void)turnOffTheRGBLight;
+-(void)turnOnTheRGBLightType;
+-(void)turnOffTheRGBLightType;
 
 - (void)xorVerify;
 

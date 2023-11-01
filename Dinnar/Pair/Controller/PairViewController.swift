@@ -18,6 +18,7 @@ class PairViewController: BaseViewController {
     @IBOutlet weak var paireBtn: UIButton!
     @IBOutlet weak var imgView: UIImageView!
     @IBOutlet weak var navView: UIView!
+    var bluthName:String = "OSTRAN"
     var intoType:NSInteger = 0
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -76,9 +77,9 @@ class PairViewController: BaseViewController {
 extension PairViewController{
     
     func scaning(){
-        
+        print("bluthName:\(self.bluthName)")
         let sensor = SerialGATT.shareInstance()!
-        if sensor.activePeripheral != nil,sensor.activePeripheral.name == "OSTRAN"{
+        if sensor.activePeripheral != nil,sensor.activePeripheral.name == self.bluthName {
             if sensor.activePeripheral.state == .connected {
                 pairingStatus = .paired
                 setupSubviews()
@@ -130,7 +131,7 @@ extension PairViewController:BTSmartSensorDelegate{
             print("mame:" +  name)
         }
         
-        if peripheral.name == "OSTRAN"{
+        if peripheral.name == self.bluthName {
             let sensor = SerialGATT.shareInstance()!
             sensor.stopScan()
             sensor.activePeripheral = peripheral

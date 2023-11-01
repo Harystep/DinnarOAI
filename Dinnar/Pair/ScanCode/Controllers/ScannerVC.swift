@@ -15,6 +15,8 @@ public class ScannerVC: UIViewController {
     var autoType:Bool = false
     var timer:Timer!
     var point:NSString = ""
+    var lightType:String = ""
+    var lightItemType:Int = 0 //0:环光 1：rgb
     public lazy var headerViewController:HeaderVC = .init()
     
     public lazy var cameraViewController:CameraVC = .init()
@@ -93,6 +95,7 @@ public class ScannerVC: UIViewController {
         self.stopTimerOp()
         let content:NSString = "Next_NG_\(self.point)" as NSString
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "kSendClientDataKey"), object: content)
+        SerialGATT.shareInstance()?.turnOffTheLight()
         self.navigationController?.popViewController(animated: true)
     }
     
@@ -102,8 +105,7 @@ public class ScannerVC: UIViewController {
     
     @objc func backBtnClick() {
         
-        SerialGATT.shareInstance().turnOffTheLight()
-//        SerialGATT.shareInstance()?.turnOffTheRGBLight()
+        SerialGATT.shareInstance()?.turnOffTheLight()
         
         self.navigationController?.popViewController(animated: true)
     }

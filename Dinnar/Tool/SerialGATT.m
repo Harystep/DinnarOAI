@@ -682,7 +682,38 @@ NSString *  closeChannel1Str = @"#210291B";
 }
 
 /////////////////
--(void)turnOnTheLight{
+- (void)turnOnTheLight {
+    
+    if (self.lightType == 1) {
+        [self turnOnTheRGBLightType];
+    } else {
+        [self turnOnTheRingLightType];
+    }
+}
+- (void)turnOffTheLight {
+    
+    if (self.lightType == 1) {
+        [self turnOffTheRGBLightType];
+    } else {
+        [self turnOffTheRingLightType];
+    }
+}
+
+- (void)setLightNum:(NSString *)lightNum {
+    NSString *content = [NSString stringWithFormat:@"%lx", (long)[lightNum integerValue]];
+    NSLog(@"num:%@", content);
+    _lightNum = content;
+}
+
+- (void)setLighColor:(NSString *)lighColor {
+    _lighColor = lighColor;
+}
+
+- (void)setLightType:(int)lightType {
+    _lightType = lightType;
+}
+
+-(void)turnOnTheRingLightType {
     if (self.activePeripheral == nil){
         return;
     }
@@ -694,7 +725,8 @@ NSString *  closeChannel1Str = @"#210291B";
     NSData *data3 = [openChannel3Str dataUsingEncoding:[NSString defaultCStringEncoding]];
     [self write:self.activePeripheral data:data3];
 }
--(void)turnOffTheLight{
+
+-(void)turnOffTheRingLightType {
     if (self.activePeripheral == nil){
         return;
     }
@@ -708,25 +740,35 @@ NSString *  closeChannel1Str = @"#210291B";
     [self write:self.activePeripheral data:data3];
 }
 
--(void)turnOnTheRGBLight{
+-(void)turnOnTheRGBLightType {
     if (self.activePeripheral == nil){
         return;
     }
     self.isWithOut = NO;
-    //step1
-    NSData *data1 = [@"FF010100FF00" dataUsingEncoding:[NSString defaultCStringEncoding]];
-    [self write:self.activePeripheral data:data1];
+    NSString *dataStr;
+    if([self.lighColor isEqualToString:@"01"]) {
+        dataStr = [NSString stringWithFormat:@"FE010100%@020000030000040000FF00", self.lightNum];
+    } else if ([self.lighColor isEqualToString:@"02"]) {
+        dataStr = [NSString stringWithFormat:@"FE010200000200%@030000040000FF00", self.lightNum];
+    } else if ([self.lighColor isEqualToString:@"03"]) {
+        dataStr = [NSString stringWithFormat:@"FE010300000200000300%@040000FF00", self.lightNum];
+    } else {
+        dataStr = [NSString stringWithFormat:@"FE010400000200000300000400%@FF00", self.lightNum];
+    }
+    NSLog(@"dataStr:%@", dataStr);
+    [self write:self.activePeripheral data:[self convertHexStrToData:dataStr]];
    
 }
 
--(void)turnOffTheRGBLight{
+-(void)turnOffTheRGBLightType {
     if (self.activePeripheral == nil){
         return;
     }
     self.isWithOut = NO;
-    
-    NSData *data1 = [@"FF0101000000" dataUsingEncoding:[NSString defaultCStringEncoding]];
-    [self write:self.activePeripheral data:data1];
+    //
+    NSString *content = [NSString stringWithFormat:@"FE01%@0000020000030000040000FF00", self.lighColor];
+    NSLog(@"off:%@", content);
+    [self write:self.activePeripheral data:[self convertHexStrToData:content]];
 }
 
 - (void)xorVerify {
@@ -788,6 +830,29 @@ NSString *  closeChannel1Str = @"#210291B";
         range.length = 2;
     }
     return hexData;
+}
+
+- (NSString *)convertStringToHexStr:(NSString *)str {
+    if (!str || [str length] == 0) {
+        return @"";
+    }
+    NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
+    
+    NSMutableString *string = [[NSMutableString alloc] initWithCapacity:[data length]];
+    
+    [data enumerateByteRangesUsingBlock:^(const void *bytes, NSRange byteRange, BOOL *stop) {
+        unsigned char *dataBytes = (unsigned char*)bytes;
+        for (NSInteger i = 0; i < byteRange.length; i++) {
+            NSString *hexStr = [NSString stringWithFormat:@"%x", (dataBytes[i]) & 0xff];
+            if ([hexStr length] == 2) {
+                [string appendString:hexStr];
+            } else {
+                [string appendFormat:@"0%@", hexStr];
+            }
+        }
+    }];
+    
+    return string;
 }
 
 @end

@@ -99,6 +99,7 @@
 		4C3AB8CF2AECF8220059E988 /* best.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 4C3AB8CE2AECF8220059E988 /* best.mlmodel */; };
 		4C3AB8D12AECFD330059E988 /* yolov5s-seg.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 4C3AB8D02AECFD330059E988 /* yolov5s-seg.mlmodel */; };
 		4C3AB8D32AED04FE0059E988 /* 123.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4C3AB8D22AED04FE0059E988 /* 123.jpg */; };
+		4C3AB8D52AEFB32A0059E988 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C3AB8D42AEFB32A0059E988 /* opencv2.framework */; };
 		4C6568E82AE8A23B00E34137 /* swift_v3.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 4C6568E72AE8A23B00E34137 /* swift_v3.mlmodel */; };
 		4C6F65222AE11E4F005C0092 /* WJQRcode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6F651B2AE11E4F005C0092 /* WJQRcode.swift */; };
 		4C6F65232AE11E4F005C0092 /* WJQRView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6F651D2AE11E4F005C0092 /* WJQRView.swift */; };
@@ -254,6 +255,7 @@
 		4C3AB8CE2AECF8220059E988 /* best.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = best.mlmodel; sourceTree = "<group>"; };
 		4C3AB8D02AECFD330059E988 /* yolov5s-seg.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = "yolov5s-seg.mlmodel"; sourceTree = "<group>"; };
 		4C3AB8D22AED04FE0059E988 /* 123.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 123.jpg; sourceTree = "<group>"; };
+		4C3AB8D42AEFB32A0059E988 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = opencv2.framework; sourceTree = "<group>"; };
 		4C6568E72AE8A23B00E34137 /* swift_v3.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = swift_v3.mlmodel; sourceTree = "<group>"; };
 		4C6F651B2AE11E4F005C0092 /* WJQRcode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WJQRcode.swift; sourceTree = "<group>"; };
 		4C6F651D2AE11E4F005C0092 /* WJQRView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WJQRView.swift; sourceTree = "<group>"; };
@@ -307,6 +309,7 @@
 				389DA4042A395909007BC96A /* AVFoundation.framework in Frameworks */,
 				389DA3FF2A3958FB007BC96A /* libc++.tbd in Frameworks */,
 				9CF2CD5D8F9EA4F0200AB4A1 /* libPods-Dinnar.a in Frameworks */,
+				4C3AB8D52AEFB32A0059E988 /* opencv2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -453,6 +456,7 @@
 		3861B9832A1904F100E9BB08 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				4C3AB8D42AEFB32A0059E988 /* opencv2.framework */,
 				4C3AB8D22AED04FE0059E988 /* 123.jpg */,
 				4C3AB8D02AECFD330059E988 /* yolov5s-seg.mlmodel */,
 				4C3AB8CE2AECF8220059E988 /* best.mlmodel */,
