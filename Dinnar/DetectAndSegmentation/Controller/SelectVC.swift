@@ -104,7 +104,7 @@ class SelectVC: BaseViewController {
                     self.navigationController?.pushViewController(vc, animated: true)
                     return;
                 }
-                
+
             } else {
                 let vc = PairViewController.initWithNib()
                 if self.lightItemType == 1 {

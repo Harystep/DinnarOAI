@@ -20,4 +20,7 @@ const std::vector<std::string> class_names = {
     "microwave", "oven", "toaster", "sink", "refrigerator", "book", "clock", "vase", "scissors", "teddy bear",
     "hair drier", "toothbrush" };
 
+const std::vector<std::string> class_namedetects = {
+    "waste", "impurity", "code", "juxing", "yuanquan"};
+
 #endif /* ConstOC_h */

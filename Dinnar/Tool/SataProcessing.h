@@ -14,5 +14,8 @@
 
 -(void)letterboxOC:(UIImage *)img productId:(NSString *)productId var_949:(MLMultiArray *)var_949 var_818:(MLMultiArray *)var_818  block:(void (^)(UIImage * image, NSMutableArray *array))block;
 
+
+-(void)letterboxDetectOC:(UIImage *)img productId:(NSString *)productId var_949:(MLMultiArray *)var_949 block:(void (^)(UIImage * image, NSMutableArray *array))block ;
+
 @end
 

@@ -8,8 +8,86 @@
 #import "SataProcessing.h"
 #import "Dinnar-Swift.h"
 #import "ConstOC.h"
+#include <iostream>
 
 @implementation SataProcessing
+
+-(void)letterboxDetectOC:(UIImage *)img productId:(NSString *)productId var_949:(MLMultiArray *)var_949 block:(void (^)(UIImage * image, NSMutableArray *array))block {
+    NSMutableArray * areas = [[NSMutableArray alloc]init];
+    std::vector<float> paddings(3);
+    cv::Mat image = [self cvMatFromUIImage:img];
+    std::cout<<image.rows<<" "<<image.cols<<std::endl;
+    cv::Mat resized_img = letterDetectbox(image, paddings);
+    int a1 = [[var_949.shape objectAtIndex:1] intValue];
+    int a2 = [[var_949.shape objectAtIndex:2] intValue];
+    cv::Mat detect_buffer = cv::Mat(a1, a2, CV_32F,var_949.dataPointer);
+    std::vector<cv::Rect2d> boxes;
+    std::vector<int> class_ids;
+    std::vector<float> class_scores;
+    std::vector<float> confidences;
+    std::vector<cv::Mat> masks;
+    std::vector<int> indices;
+    indices = boxDetectProcessing(detect_buffer, paddings, boxes, class_ids, class_scores, confidences, masks);
+    // 输出vector中的元素
+    cv::Rect2d box_2;
+    cv::Rect2d box_3;
+    cv::Rect2d box_4;
+    for (size_t i = 0; i < indices.size(); i++) {
+        int index = indices[i];
+        int class_id = class_ids[index];
+        if (class_id == 1||class_id == 0) {
+            cv::rectangle(image, boxes[index], colors[class_id % 6], 2, 8);
+            std::string label = class_namedetects[class_id] + ":" + std::to_string(confidences[index]);
+            cv::putText(image, label, cv::Point(boxes[index].tl().x, boxes[index].tl().y - 10), cv::FONT_HERSHEY_SIMPLEX, .5, colors[class_id % 6]);
+            
+            AreaModel2 * model = [[AreaModel2 alloc]init];
+            NSString * className = [NSString stringWithCString:class_namedetects[class_id].c_str() encoding:[NSString defaultCStringEncoding]];
+            model.type = className;
+            model.recordId = productId;
+            model.area = [NSString stringWithFormat:@"%f", boxes[index].width*boxes[index].height];
+            model.percentage = [NSString stringWithFormat:@"%f", (boxes[index].width*boxes[index].height*1.0/(image.rows*image.rows))];
+            [areas addObject:model];
+        }
+        if (class_id == 2) {
+            box_2 = boxes[index];            
+        }
+        if (class_id == 3) {
+            box_3 = boxes[index];
+        }
+        if (class_id == 4) {
+            box_4 = boxes[index];
+        }
+    }
+    float marginx = 0.01*image.rows*0.5/0.3;
+    
+    float marginL = box_2.x - box_3.x;
+    float marginT = box_2.y - box_3.y;
+    float marginR = box_3.x+box_3.width-box_2.x-box_2.width;
+    float marginB = box_3.y+box_3.height-box_2.y-box_2.height;
+    
+    if ((marginR > marginx) && (marginL>marginx) && (marginT > marginx) &&(marginB>marginx)) {
+    } else {
+        if (box_2.width>0) {            
+            float centerX_2 = box_2.x + (box_2.width/2.0);
+            float centerY_2 = box_2.y + (box_2.height/2.0);
+            float centerX_3 = box_3.x + (box_3.width/2.0);
+            float centerY_3 = box_3.y + (box_3.height/2.0);
+            if (fabs(centerX_2-centerX_3)<marginx && fabs(centerY_2-centerY_3)<marginx) {
+            } else {
+                cv::rectangle(image, box_2, colors[2], 2, 8);
+                AreaModel2 * model = [[AreaModel2 alloc]init];
+                model.type = @"code";
+                model.recordId = productId;
+                model.area = [NSString stringWithFormat:@"%f", box_2.width*box_2.height];
+                model.percentage = [NSString stringWithFormat:@"%f", (box_2.width*box_2.height*1.0/(image.rows*image.rows))];
+                [areas addObject:model];
+            }
+        }
+    }
+    block([self UIImageFromCVMat:image],areas);
+
+}
+
 -(void)letterboxOC:(UIImage *)img productId:(NSString *)productId var_949:(MLMultiArray *)var_949 var_818:(MLMultiArray *)var_818  block:(void (^)(UIImage * image, NSMutableArray *array))block{
     NSMutableDictionary * dic = [[NSMutableDictionary alloc]init];
     NSMutableArray * areas = [[NSMutableArray alloc]init];
@@ -31,7 +109,9 @@
     std::vector<cv::Mat> masks;
     std::vector<int> indices;
     indices = boxProcessing(detect_buffer, paddings, boxes, class_ids, class_scores, confidences, masks);
+    
     std::vector<cv::Mat> rgb_masks = maskProcessing(image, indices, proto_buffer, paddings, boxes, masks);
+    
     for (size_t i = 0; i < indices.size(); i++) {
         int index = indices[i];
         int class_id = class_ids[index];

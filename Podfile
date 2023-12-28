@@ -12,5 +12,6 @@ target 'Dinnar' do
   pod 'IQKeyboardManagerSwift', '~> 6.5.1'
   pod 'YBImageBrowser'
   pod 'CocoaAsyncSocket'
-
+  pod 'OpenCV', '~> 4.7.0'
+  
 end

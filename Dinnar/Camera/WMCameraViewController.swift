@@ -36,11 +36,12 @@ class WMCameraViewController: BaseViewController {
     var timer: Timer?
     var timerCount:NSInteger = 0
     let cameraContentView = UIView()
-    
+    let thresholdValue:Double = 18
     var autoType:Bool = false
     
     var codeDetectModel=DetectModel(rect: CGRect())
     var bottomDetectModel=DetectModel(rect: CGRect())
+    var circleDetectModel=DetectModel(rect: CGRect())
     var point:NSString = ""
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -214,7 +215,8 @@ extension WMCameraViewController{
         let image = UIImage.init(contentsOfFile: imgUrl)?.scaled(to: imageSize)
         let input = (try? yolov5s_segInput.init(imageWith: image!.cgImage!))!
         let result = try? mmodel?.prediction(input: input)
-        if let coo = result?.var_949,let co = result?.var_818 {
+        print("var_949--->\(result?.var_949)")
+        if let coo = result?.var_949,let co = result?.var_818 {            
             SataProcessing.init().letterboxOC(image,productId: self.productId, var_949: coo, var_818: co) { (image, array) in
                 let model = DetailModel.init()
                 if let  list = array as? [[AreaModel2]]{
@@ -263,9 +265,8 @@ extension WMCameraViewController{
             return
         }
         let preSecord = self.getCurrentMilliStamp()
-//        let url = swift_v3.urlOfModelInThisBundle
-        let url = best.urlOfModelInThisBundle
-        guard let mmodel =  try? best.init(contentsOf:url ) else {
+        let url = swift_1207.urlOfModelInThisBundle
+        guard let mmodel =  try? swift_1207.init(contentsOf:url ) else {
             return
         }
         var imageSize = CGSize.init(width: inputImgSize.width, height: inputImgSize.height)
@@ -274,104 +275,46 @@ extension WMCameraViewController{
             imageSize.height = CGFloat(h)
         }
 
-        guard let mateData = mmodel.model.modelDescription.metadata[MLModelMetadataKey.creatorDefinedKey] as?[String:Any],let classes = mateData["classes"] as? String  else {
-            return
-        }
-//        if let iou_threshold = mateData["iou_threshold"] as? String,let confidence_threshold = mateData["confidence_threshold"] as? String,let iou = Double(iou_threshold),let confidence = Double(confidence_threshold){
-//            iouThreshold = iou
-//            confidenceThreshold = confidence
-//        }
         print("\(imageSize.width)-------------\(imageSize.height)")
 //        let image = UIImage.init(contentsOfFile: Bundle.main.path(forResource: "123", ofType: "jpg")!)?.scaled(to: imageSize)
         let image = UIImage.init(contentsOfFile: imgUrl)?.scaled(to: imageSize)
         self.saveImage(image: image!)
-//        let buff = ImageTool.buffer(from: image!)
-//        let input = (try? m10d17_swift_v2Input.init(imageWith: image!.cgImage!))!
-//        let input = (try?bestInput.init(imageWith: (image?.cgImage!)!))
+//        let input = (try?swift_1110_v2Input.init(imageWith: (image?.cgImage!)!))!
+        let input = (try?swift_1207Input.init(imageWith: (image?.cgImage!)!))!
+        let result = try? mmodel.prediction(input: input)
         
-        let input = (try?bestInput.init(imageWith: (image?.cgImage!)!, iouThreshold: self.iouThreshold, confidenceThreshold: self.confidenceThreshold))
-                     
-//        let input = m10d17_swift_v2Input.init(image: buff!, iouThreshold: 0.45, confidenceThreshold: 0.02)
-//        let result = try? mmodel.prediction(input: input)
-        
-        let classArray = classes.components(separatedBy: ",")
-//        print("classArray--->\(classArray)");
-        DispatchQueue.global().async {
-
-            if let result = try? mmodel.prediction(input: input!),let img = image {
-                let endSecord = self.getCurrentMilliStamp()
-                print("coordinates:\(result.coordinates)")
-                DispatchQueue.main.async {
-                    let models = DataTool.detectModelArray(from: result, names: classArray)
-
-                    var effModels:[DetectModel] = []
-                    let model = DetailModel.init()
-
-                    let contentWidth = UIScreen.main.bounds.size.width-20
-                    
-                    for areas in models {
-                        let targetModel:DetectModel = areas
-                        print("labelName---->\(targetModel.labelName)")
-                        let content:NSString = targetModel.labelName as NSString
-                        if content.integerValue == 2 {
-                            self.codeDetectModel = targetModel
-                        }
-                        if content.integerValue == 3 {
-                            self.bottomDetectModel = targetModel
-                        }
+        if let coo = result?.var_904 {
+            SataProcessing.init().letterboxDetectOC(image,productId: self.productId, var_949: coo) { (image, array) in
+                let model = DetailModel.init()
+                if let  list = array as? [AreaModel2] {
+                    for areas in list {
+                        let aModel:AreaModel2 = areas
+                        aModel.type = self.convertContentFromType(aModel.type as NSString) as String
+                        model.group.append(aModel.toModel())
                     }
-                    
-                    for areas in models {
-                        let aModel2 = AreaModel2()
-                        let targetModel:DetectModel = areas
-                        aModel2.area = "\(targetModel.rect.width*targetModel.rect.height*contentWidth*contentWidth)"
-                        aModel2.type = self.convertContentFromType(targetModel.labelName as NSString) as String
-                        aModel2.percentage = "\(targetModel.confidence)"
-                        let content:NSString = targetModel.labelName as NSString
-                        if content.integerValue == 3 {
-                        } else {
-                            model.group.append(aModel2.toModel())
-                            effModels.append(areas)
-                        }
-                        
-                        
-//                        print("labelName---->\(targetModel.labelName)")
-//                        let content:NSString = targetModel.labelName as NSString
-//                        if content.integerValue == 2 || content.integerValue == 3 {
-//                            if self.judgeCodeLocation(self.codeDetectModel, self.bottomDetectModel, CGSize(width: contentWidth, height: contentWidth)) {
-//                                model.group.append(aModel2.toModel())
-//                            }
-//                        } else {
-//                        }
-//                        model.group.append(aModel2.toModel())
-                    }
-                    
-                    let image = ImageTool.drawRectangle(image: img, array: effModels)
-                    self.saveImage(image: image!)
-                    
-                    model.addTime = DateTool.dateToStr(date: Date())
-                    model.image = image
-                    model.productId = self.productId
-                    model.operatorName = DataTool.getUserName()
-                    if model.group.count == 0 {
-                        model.result = "1"
-                    }else{
-                        model.result = "0"
-                    }
-                    print("handletime----->\(endSecord)---\(preSecord)")
-                    model.handleTime = "\(endSecord - preSecord)"
-                    SerialGATT.shareInstance()?.turnOffTheLight()
-                    DispatchQueue.main.async {
-                        let detailVc = DetailsVC()
-                        detailVc.model = model
-                        detailVc.selectType = self.selectType
-                        detailVc.autoType = self.autoType
-                        print("point--->\(self.point)")
-                        detailVc.point = self.point
-                        self.navigationController?.pushViewController(detailVc, animated: true)
-                    }
-
                 }
+                if model.group.count == 0{
+                    model.result = "1"
+                } else{
+                    model.result = "0"
+                }
+                model.image = image;
+                model.productId = self.productId
+                self.saveImage(image: image!)
+                let endSecord = self.getCurrentMilliStamp()
+                model.handleTime = "\(endSecord - preSecord)"
+                model.addTime = DateTool.dateToStr(date: Date())
+                model.operatorName = DataTool.getUserName()
+                DispatchQueue.main.async {
+                    let detailVc = DetailsVC()
+                    detailVc.model = model
+                    detailVc.selectType = self.selectType
+                    detailVc.autoType = self.autoType
+                    print("point--->\(self.point)")
+                    detailVc.point = self.point
+                    self.navigationController?.pushViewController(detailVc, animated: true)
+                }
+                
             }
         }
     }
@@ -394,21 +337,21 @@ extension WMCameraViewController{
         let bottomY:Double = bottomRect.origin.y*imageSize.width
         
         if codeX > bottomX {
-            if codeX - bottomX > 6 {
+            if codeX - bottomX > thresholdValue {
                 flag = true
             }
         } else {
-            if bottomX - codeX > 6 {
+            if bottomX - codeX > thresholdValue {
                 flag = true
             }
         }
         if flag == false {
             if codeY > bottomY {
-                if codeY - bottomY > 6 {
+                if codeY - bottomY > thresholdValue {
                     flag = true
                 }
             } else {
-                if bottomY - codeY > 6 {
+                if bottomY - codeY > thresholdValue {
                     flag = true
                 }
             }
@@ -429,15 +372,16 @@ extension WMCameraViewController{
     func convertContentFromType(_ num:NSString) ->(NSString) {
         var content:NSString
         
-        if num.integerValue == 0 {
+        if num.isEqual(to: "waste") {
             content = "废料"
-        } else if num.integerValue == 1 {
+        } else if num.isEqual(to: "impurity") {
             content = "毛丝杂质"
-        } else if num.integerValue == 2 {
-            content = "二维码偏位"
         } else {
-            content = "二维码缺失"
+            content = "二维码偏位"
         }
+//        else {
+//            content = "二维码缺失"
+//        }
         return content
     }
 
@@ -493,34 +437,6 @@ extension WMCameraViewController{
 //                        self.completeBlock(model)
 //                    }
 //                    SerialGATT.shareInstance()?.turnOffTheLight()
-//
-//                }
-//            }
-
-
-//            let result = try? mmodel.prediction(input: input)
-//            if let coo = result?.confidence,let co = result?.coordinates {
-//                SataProcessing.init().letterboxOC(image,productId: self.productId, var_949: coo, var_818: co) { (image, array) in
-//                    let model = DetailModel.init()
-//                    if let  list = array as? [[AreaModel2]]{
-//                        for areas in list {
-//                            for area in areas {
-//                                model.group.append(area.toModel())
-//                            }
-//                        }
-//                    }
-//                    model.addTime = DateTool.dateToStr(date: Date())
-//                    model.image = image
-//                    model.productId = self.productId
-//                    model.operatorName = DataTool.getUserName()
-//                    if model.group.count == 0{
-//                        model.result = "1"
-//                    }else{
-//                        model.result = "0"
-//                    }
-//                    self.dismiss(animated: true) {
-//                        self.completeBlock(model)
-//                    }
 //
 //                }
 //            }

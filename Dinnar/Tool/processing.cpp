@@ -1,4 +1,5 @@
 #include "processing.h"
+#include <opencv2/dnn/dnn.hpp>
 
 float sigmoid_function(float a)
 {
@@ -7,6 +8,49 @@ float sigmoid_function(float a)
 }
 
 cv::Mat letterbox(cv::Mat& img, std::vector<float>& paddings, std::vector<int> new_shape)
+{
+    // Get current image shape [height, width]
+    // Refer to https://github.com/ultralytics/yolov5/blob/master/utils/augmentations.py#L111
+
+    int img_h = img.rows;
+    int img_w = img.cols;
+
+    // Compute scale ratio(new / old) and target resized shape
+    float scale = std::min(new_shape[1] * 1.0 / img_h, new_shape[0] * 1.0 / img_w);
+    int resize_h = int(round(img_h * scale));
+    int resize_w = int(round(img_w * scale));
+    paddings[0] = scale;
+
+    // Compute padding
+    int pad_h = new_shape[1] - resize_h;
+    int pad_w = new_shape[0] - resize_w;
+
+
+    // Resize and pad image while meeting stride-multiple constraints
+    cv::Mat resized_img;
+    cv::resize(img, resized_img, cv::Size(resize_w, resize_h));
+
+    // divide padding into 2 sides
+    float half_h = pad_h * 1.0 / 2;
+    float half_w = pad_w * 1.0 / 2;
+    paddings[1] = half_h;
+    paddings[2] = half_w;
+
+    // Compute padding boarder
+    int top = int(round(half_h - 0.1));
+    int bottom = int(round(half_h + 0.1));
+    int left = int(round(half_w - 0.1));
+    int right = int(round(half_w + 0.1));
+    //cv::warpa
+    // Add border
+    cv::copyMakeBorder(resized_img, resized_img, top, bottom, left, right, 0, cv::Scalar(114, 114, 114));
+    cv::imwrite("test.jpg", resized_img);
+
+    return resized_img;
+
+}
+
+cv::Mat letterDetectbox(cv::Mat& img, std::vector<float>& paddings, std::vector<int> new_shape)
 {
     // Get current image shape [height, width]
     // Refer to https://github.com/ultralytics/yolov5/blob/master/utils/augmentations.py#L111
@@ -129,7 +173,7 @@ std::vector<int> boxProcessing(cv::Mat detect_buffer,
         //取最大值score及指针
         cv::minMaxLoc(classes_scores, NULL, &score, NULL, &class_id);
 
-        // class score: 0~1
+//         class score: 0~1
         if (score > 0.25)
         {
             cv::Mat mask = detect_buffer.row(i).colRange(85, 117);
@@ -153,6 +197,51 @@ std::vector<int> boxProcessing(cv::Mat detect_buffer,
     // NMS
     std::vector<int> indices;
     cv::dnn::NMSBoxes(boxes, confidences, conf_threshold, nms_threshold, indices);
+    return indices;
+}
+
+std::vector<int> boxDetectProcessing(cv::Mat detect_buffer,
+                               std::vector<float> paddings,
+                               std::vector<cv::Rect2d>& boxes,
+                               std::vector<int>& class_ids,
+                               std::vector<float>& class_scores,
+                               std::vector<float>& confidences,
+                               std::vector<cv::Mat>& masks){
+    float scale = paddings[0];
+    std::vector<float> conf_thresholds = {0.1, 0.2, 0.02, 0.02, 0.02};
+    for (int i = 0; i < detect_buffer.rows; i++) {
+        float confidence = detect_buffer.at<float>(i, 4);
+        cv::Mat classes_scores = detect_buffer.row(i).colRange(5, 10);
+        cv::Point class_id;
+        double score;
+        //取最大值score及指针
+        cv::minMaxLoc(classes_scores, NULL, &score, NULL, &class_id);
+        if (confidence < conf_thresholds[class_id.x]) {
+            continue;
+        }
+        if (score > 0.25)
+        {
+            
+            float cx = detect_buffer.at<float>(i, 0);
+            float cy = detect_buffer.at<float>(i, 1);
+            float w = detect_buffer.at<float>(i, 2);
+            float h = detect_buffer.at<float>(i, 3);
+            double left = static_cast<double>((cx - 0.5 * w - paddings[2]) / scale);
+            double top = static_cast<double>((cy - 0.5 * h - paddings[1]) / scale);
+            double width = static_cast<double>(w / scale);
+            double height = static_cast<double>(h / scale);
+            cv::Rect2d box(left, top, width, height);
+
+            boxes.push_back(box);
+            class_ids.push_back(class_id.x);
+            class_scores.push_back(score);
+            confidences.push_back(confidence);
+            
+        }
+    }
+    // NMS
+    std::vector<int> indices;
+    cv::dnn::NMSBoxesBatched(boxes, confidences, class_ids, 0.02, 0.45, indices);
     return indices;
 }
 

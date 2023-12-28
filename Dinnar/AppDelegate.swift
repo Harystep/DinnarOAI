@@ -16,14 +16,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         window = UIWindow.init(frame: UIScreen.main.bounds)
         window?.backgroundColor = UIColor.white
-//        let islogin = DataTool.getToken() != nil
-//        if !islogin{
-//            self.window?.rootViewController =  LoginViewController.initWithNib()
-//        } else {
-//        }
-        let navC = UINavigationController.init(rootViewController:SelectVC.initWithNib())
-        navC.navigationBar.isHidden = true
-        self.window?.rootViewController =  navC
+        let islogin = DataTool.getToken() != nil
+        if !islogin{
+            self.window?.rootViewController =  LoginViewController.initWithNib()
+        } else {
+            let navC = UINavigationController.init(rootViewController:SelectVC.initWithNib())
+            navC.navigationBar.isHidden = true
+            self.window?.rootViewController =  navC
+        }
         IQKeyboardManager.shared.enable = true
         window?.makeKeyAndVisible()
         

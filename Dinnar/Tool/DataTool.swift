@@ -27,8 +27,9 @@ class DataTool {
             return nil
         }
     }
-    ///转模型m5d8_HSG  m5d8_HSGOutput   m10d17_swift_v2Output  swift_1026Output  swift_1027_2  best
+    ///转模型m5d8_HSG  m5d8_HSGOutput   m10d17_swift_v2Output  swift_1026Output  swift_1027_2  best  swift_v1104   swift_1110_v2Input
 //    static func detectModelArray(from detect:m10d17_swift_v2Output,names:[String])->[DetectModel]{
+    @available(iOS 14.0, *)
     static func detectModelArray(from detect:bestOutput,names:[String])->[DetectModel]{
         
         var models:[DetectModel] = []
@@ -93,7 +94,6 @@ class DataTool {
                 }
             }
         }
-//        print("count2---->\(modelArray.count)")
         return modelArray
     }
     

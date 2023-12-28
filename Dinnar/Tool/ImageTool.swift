@@ -39,6 +39,8 @@ class ImageTool {
 //            print("rect----->\(model.rect)")
             let width = rect.size.width * imgWidth
             let height = rect.size.height * imgHeight
+//            let x = (rect.origin.x) * imgWidth - width/2.0
+//            let y = (rect.origin.y) * imgHeight - height/2.0
             let x = (rect.origin.x-0.010) * imgWidth - width/2.0
             let y = (rect.origin.y-0.00345) * imgHeight - height/2.0
             let path = CGMutablePath()
